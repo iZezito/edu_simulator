@@ -1,6 +1,6 @@
 import { parseCookies, destroyCookie } from "nookies";
 import axios from 'axios';
-
+console.log('API', import.meta.env.VITE_BASE_URL);
 // URL da sua API
 const api = axios.create({
     baseURL: import.meta.env.VITE_BASE_URL,

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 type NavLinksProps = {
@@ -6,7 +5,7 @@ type NavLinksProps = {
 };
 
 const NavLinks = ({ classe }: NavLinksProps) => {
-    const location = useLocation(); // Obtem o pathname atual no React puro
+    const location = useLocation();
 
     const linkClass = (path: string) =>
         `transition-colors hover:text-foreground min-w-fit ${
@@ -16,16 +15,13 @@ const NavLinks = ({ classe }: NavLinksProps) => {
     return (
         <div className={classe}>
             <Link to="/" className={linkClass("/")}>
-                HOME
+                Início
             </Link>
-            <Link to="/ofertas" className={linkClass("/ofertas")}>
-                Ofertas
+            <Link to="/simulado" className={linkClass("/simulado")}>
+                Simulado
             </Link>
-            <Link to="/ofertas/new" className={linkClass("/ofertas/new")}>
-                Busca de Ofertas
-            </Link>
-            <Link to="/ofertas/passing" className={linkClass("/ofertas/passing")}>
-                Ofertas Passando
+            <Link to="/sobre" className={linkClass("/sobre")}>
+                Sobre
             </Link>
         </div>
     );

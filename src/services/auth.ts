@@ -1,25 +1,15 @@
+import { LoginData } from "@/types/index.ts";
 import api from "./api.ts";
 import {setCookie, destroyCookie, parseCookies} from "nookies";
 
-interface LoginData {
-    email: string;
-    password: string;
-}
-
 interface AuthResponse {
     token: string;
-    user: {
-        id: string;
-        name: string;
-        email: string;
-    };
+    usuario:string;
 }
 
 
 export const login = async (data: LoginData): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/auth/login', data);
-
-
+    const response = await api.post<AuthResponse>('/login', {login: data.email, senha: data.password});
     setCookie(null, 'token', response.data.token, {
         maxAge: 60 * 60 * 24 * 7,
         path: '/',

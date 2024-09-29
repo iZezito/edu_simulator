@@ -1,6 +1,10 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-import { useContext } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import Home from "@/pages/home.tsx";
+import {LoginForm} from "@/pages/login.tsx";
+import NotFound from "@/pages/not-found.tsx";
+import {SignupForm} from "@/pages/signup.tsx";
+import SimuladoPage from '@/pages/simulado';
 
 const allRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -9,19 +13,37 @@ const allRoutes = () => {
     {
       path: '/',
       exact: true,
-      element: !isAuthenticated ? <>Home</> : <Navigate to="/profile" />
+      element: !isAuthenticated ? <Home /> : <Navigate to="/simulado" />,
+    },
+    {
+      path: '/login',
+      exact: true,
+      element: !isAuthenticated ? <LoginForm /> : <Navigate to="/simulado" />,
+    },
+    {
+      path: '/signup',
+      exact: true,
+      element: !isAuthenticated ? <SignupForm/> : <Navigate to={'/simulado'}/>,
+
     }
   ];
 
   const privateRoutes = [
     {
-      path: '/profile',
+      path: '/simulado',
       exact: true,
-      element: isAuthenticated ? <>TEste</> : <Navigate to="/" />
-    }
+      element: isAuthenticated ? <SimuladoPage/> : <Navigate to="/login" />,
+    },
   ];
 
-  return [...publicRoutes, ...privateRoutes];
+  const notFoundRoute = [
+    {
+      path: '*',
+      element: <NotFound />,
+    },
+  ];
+
+  return [...publicRoutes, ...privateRoutes, ...notFoundRoute];
 };
 
 export default function Routes() {
