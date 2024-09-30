@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { useNavigate } from 'react-router-dom';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { ClipboardCheckIcon, TrophyIcon } from '@/components/icons';
 import { Simulado } from '@/types';
+import { cn } from "@/lib/utils";
 
 interface SimuladoCardProps {
   simulado: Simulado;
@@ -10,10 +10,9 @@ interface SimuladoCardProps {
 }
 
 const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) => {
-  const navigate  = useNavigate();
 
   const click = () => {
-   handleClick(simulado.id)
+    handleClick(simulado.id);
   };
 
   return (
@@ -26,16 +25,19 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ClipboardCheckIcon className="w-5 h-5 text-muted-foreground" />
-            <span className={'text-muted-foreground'}>{simulado.finalizado ? "Concluído" : "Em andamento"}</span>
+            <span className={cn('text-muted-foreground')}>
+              {simulado.finalizado ? "Concluído" : "Em andamento"}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <TrophyIcon
-              className={simulado.finalizado ? "w-5 h-5 text-primary" : "w-5 h-5 text-muted-foreground"}
+              className={cn("w-5 h-5", simulado.finalizado ? "text-primary" : "text-muted-foreground")}
             />
             <span
-              className={
-                simulado.finalizado ? 'text-primary font-medium' : 'text-muted-foreground font-medium'
-              }
+              className={cn(
+                'font-medium',
+                simulado.finalizado ? 'text-primary' : 'text-muted-foreground'
+              )}
             >
               {simulado.finalizado ? "100%" : '-'}
             </span>

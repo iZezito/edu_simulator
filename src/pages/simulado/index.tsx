@@ -4,19 +4,17 @@ import { useEffect } from "react";
 import { Simulado } from "@/types";
 import SimuladoCard from "@/components/simulado-card";
 import { useNavigate } from "react-router-dom";
+import ContentLoader from "@/components/content-loader";
+import SimuladoCardLoading from "@/components/simulado-card-loader";
 
 export default function SimuladoPage() {
   const navigate = useNavigate();
 
-  const { data, isPending, getAll} = useService<Simulado>('simulados');
+  const { data, isPending, error, getAll} = useService<Simulado>('simulados');
 
   useEffect(() => {
     getAll()
   }, [getAll]);
-
-  if  (isPending) {
-    return <p>Carregando...</p>;
-  }
 
   const handleClick = (id: number | string) => {
     navigate(`/simulado/${id}`);
@@ -34,13 +32,17 @@ export default function SimuladoPage() {
       <div className="w-full bg-muted rounded-lg overflow-hidden">
         <div className="h-2 bg-primary" style={{ width: "30%" }} />
       </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+        <ContentLoader error={error} loading={isPending} noContent={'Dados vazios!'} loadingComponent={<SimuladoCardLoading />} repeat={15}>
                 {Array.isArray(data) && (
             data.map((resposta) => (
               <SimuladoCard key={resposta.id} simulado={resposta} handleClick={handleClick}/>
             ))
           )}
+        </ContentLoader>
       </div>
+      
     </div>
   )
 }
