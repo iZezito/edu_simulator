@@ -1,11 +1,10 @@
 import { useService } from "@/hooks/use-service";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { useEffect } from "react";
 import { Simulado } from "@/types";
 import SimuladoCard from "@/components/simulado-card";
 import { useNavigate } from "react-router-dom";
 import ContentLoader from "@/components/content-loader";
-import SimuladoCardLoading from "@/components/simulado-card-loader";
+import SimuladoCardSkeleton from "@/components/simulado-card-loader";
 
 export default function SimuladoPage() {
   const navigate = useNavigate();
@@ -34,9 +33,9 @@ export default function SimuladoPage() {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-        <ContentLoader error={error} loading={isPending} noContent={'Dados vazios!'} loadingComponent={<SimuladoCardLoading />} repeat={15}>
-                {Array.isArray(data) && (
-            data.map((resposta) => (
+        <ContentLoader error={error} loading={isPending} noContent={'Dados vazios!'} loadingComponent={<SimuladoCardSkeleton />} repeat={15}>
+                {data.list && (
+            data.list.map((resposta) => (
               <SimuladoCard key={resposta.id} simulado={resposta} handleClick={handleClick}/>
             ))
           )}

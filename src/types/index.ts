@@ -11,44 +11,15 @@ export type User = {
   nome: string;
   login: string;
   senha: string;
-}
-
-
-// export type Simulado = {
-//   id: number;
-//   usuario: User;
-//   finalizado: boolean;
-//   temporizador: string;
-//   dataInicio: Date;
-//   questoes: Questao[];
-//   respostas: Resposta[];
-// }
-
-// export type Questao = {
-//   id: number;
-//   prova: string;
-//   cabecalho: string;
-//   declaracao: string;
-//   alternativas: Alternativa[];
-
-
-// }
-
-// export type Alternativa = {
-//   id: number;
-//   texto: string;
-//   letraAlternativa: string;
-//   isCorreta: boolean;
-// }
-
-// export type Resposta = {
-//   id: number;
-//   questao: Questao;
-//   alternativa: Alternativa;
-// }
+};
 
 
 // DTOs.ts
+
+export type File = {
+  id: number,
+  filePath: string
+};
 
 // Tipo para AlternativaDTO
 export type AlternativaDTO = {
@@ -59,13 +30,14 @@ export type AlternativaDTO = {
 
 // Tipo para QuestaoComRespostaDTO
 export type QuestaoComRespostaDTO = {
-  questaoId: number;
+  id: number;
   titulo: string;
   respostaSelecionada: string | null; // Character in Java is represented as a string in TypeScript
   language: string;
   discipline: string;
   context: string;
   alternativesIntroduction: string;
+  files: File[];
   alternativas: AlternativaDTO[];
 };
 
@@ -101,3 +73,34 @@ export type Usuario = {
 export type Questao = {
   // Defina as propriedades de Questao conforme necessário
 };
+
+type Pageable = {
+  sort: Sort;
+  offset: number;
+  pageNumber: number;
+  pageSize: number;
+  unpaged: boolean;
+  paged: boolean;
+};
+
+
+type Sort = {
+  empty: boolean;
+  sorted: boolean;
+  unsorted: boolean;
+};
+
+
+export type ResponseType<T> = {
+  id: number;
+  content: T[];
+  pageable: Pageable;
+  last: boolean;
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+  sort: Sort;
+  first: boolean;
+  numberOfElements: number;
+}
