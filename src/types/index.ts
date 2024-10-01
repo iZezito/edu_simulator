@@ -26,13 +26,14 @@ export type AlternativaDTO = {
   id: number;
   letra: string; // Character in Java is represented as a string in TypeScript
   texto: string;
+  arquivo: string;
 };
 
 // Tipo para QuestaoComRespostaDTO
 export type QuestaoComRespostaDTO = {
   id: number;
   titulo: string;
-  respostaSelecionada: string | null; // Character in Java is represented as a string in TypeScript
+  respostaSelecionada: RespostaDTO; // Character in Java is represented as a string in TypeScript
   language: string;
   discipline: string;
   context: string;
@@ -44,10 +45,15 @@ export type QuestaoComRespostaDTO = {
 // Tipo para Resposta
 export type Resposta = {
   id: number;
-  simulado: Simulado;
-  usuario: Usuario;
-  questao: Questao;
+  simulado: Partial<Simulado>;
+  usuario: Partial<Usuario>;
+  questao: Partial<Questao>;
   alternativaSelecionada: string | null; // Character in Java is represented as a string in TypeScript
+};
+
+export type RespostaDTO = {
+  id: number,
+  alternativaSelecionada: string | null
 };
 
 // Tipo para Simulado
@@ -67,11 +73,11 @@ export type Simulado = {
 
 // Tipos adicionais que podem ser necessários
 export type Usuario = {
-  // Defina as propriedades de Usuario conforme necessário
+  id: number,
 };
 
 export type Questao = {
-  // Defina as propriedades de Questao conforme necessário
+  id: number,
 };
 
 type Pageable = {
