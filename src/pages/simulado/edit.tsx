@@ -1,13 +1,27 @@
-import React from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useService } from "@/hooks/use-service";
 import { QuestaoComRespostaDTO, ResponseType, Resposta, Simulado } from "@/types";
 import ContentLoader from "@/components/content-loader";
 import { QuestionDisplay } from "@/components/questao-card";
 import { QuestionDisplaySkeleton } from "@/components/questao-card-loader";
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import api from "@/services/api";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SimuladoView() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
   const { id } = useParams();
@@ -55,6 +69,27 @@ export default function SimuladoView() {
     mutation.mutate(alternative);
   };
 
+  const finalizarSimulado = async () => {
+    simuladoService.update(String(id), { finalizado: true }).then(() => {
+      toast({
+            title: "Simulado Finalizado",
+            description: "Seu simulado foi finalizado com sucesso!",
+          })
+          navigate("/simulado");
+    }).finally(() => {
+      setModalVisible(false);
+    });
+    
+    
+  };
+    // api.put(`simulados/${id}`).then(()=> {
+    //   toast({
+    //     title: "Simulado Finalizado",
+    //     description: "Seu simulado foi finalizado com sucesso!",
+    //   })
+    // });
+    // setModalVisible(false);
+
   return (
     <div className="flex flex-col items-center justify-center bg-background p-4">
       <ContentLoader
@@ -72,6 +107,26 @@ export default function SimuladoView() {
             totalQuestions={questaoDTO.totalPages}
           />
         )}
+        {page === 180 && !simulado?.finalizado && (
+          <Button onClick={() => setModalVisible(true)}>Finalizar Simulado</Button>
+        )}
+      <Dialog open={modalVisible} onOpenChange={setModalVisible}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Finalizar Simulado</DialogTitle>
+            <DialogDescription>
+              Tem certeza que deseja finalizar o simulado?
+              {simulado?.respostas !== undefined && simulado?.respostas?.length < 180 && (
+                <p className="text-red-500 font-bold mt-2">Atenção: Você não respondeu todas as questões.</p>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setModalVisible(false)}>Cancelar</Button>
+            <Button onClick={finalizarSimulado} disabled={simuladoService.isPending}>{simuladoService.isPending ? 'Finalizando...' : 'Finalizar'}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       </ContentLoader>
     </div>
   );

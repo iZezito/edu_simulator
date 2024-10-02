@@ -1,5 +1,6 @@
 import Routes from "@/routes/routes.tsx";
 import Navbar from "@/components/navbar.tsx";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
 
