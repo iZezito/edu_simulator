@@ -38,6 +38,7 @@ export type QuestaoComRespostaDTO = {
   discipline: string;
   context: string;
   alternativesIntroduction: string;
+  correctAlternative: string
   files: File[];
   alternativas: AlternativaDTO[];
 };

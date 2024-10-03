@@ -4,6 +4,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { QuestaoComRespostaDTO } from '@/types';
 import { CustomPagination } from './ui/custom-pagination';
+import { CheckCircle2, XCircle } from "lucide-react"
 
 type QuestionDisplayProps = {
   questao: QuestaoComRespostaDTO | undefined;
@@ -22,6 +23,15 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
 }) => {
   const letraSelecionada = questao?.respostaSelecionada?.alternativaSelecionada;
 
+  const renderIcon = (letra: string) => {
+    if(!isFinished || !letraSelecionada) return null
+    if(letra === letraSelecionada && letra !== questao?.correctAlternative) {
+      return <XCircle size={16} color="red"/>;
+    }else if(letra === questao?.correctAlternative || letra === letraSelecionada){
+      return <CheckCircle2 size={16} color="#008000" />
+    }
+  };
+
   return (
     <Card className="w-full max-w-3xl">
       <div className="flex justify-between items-center p-6 border-b">
@@ -37,7 +47,7 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
           <p>{questao?.context}</p>
         </div>
         
-        {questao?.files?.length > 0 && (
+        {questao?.files?.length !== undefined && questao?.files?.length  > 0 && (
           <div className="space-y-2">
             <Label>Figuras:</Label>
             <div className="grid grid-cols-2 gap-4">
@@ -61,6 +71,7 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
               <div key={alternativa.id} className={`col-span-1 ${index === 4 ? 'col-span-2' : ''}`}>
                 <RadioGroupItem value={alternativa.letra} id={`option-${alternativa.id}`} className="hidden" />
                 <Label htmlFor={`option-${alternativa.id}`} className="flex flex-col items-center space-y-2 cursor-pointer">
+                  {renderIcon(alternativa.letra)}
                   <span className="font-medium">{alternativa.letra})</span>
                   <img 
                     src={alternativa.arquivo}
@@ -84,6 +95,7 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
               <div key={alternativa.id} className="flex items-center space-x-2">
                 <RadioGroupItem value={alternativa.letra} id={`option-${alternativa.id}`} />
                 <Label htmlFor={`option-${alternativa.id}`} className="flex items-center space-x-2">
+                  {renderIcon(alternativa.letra)}
                   <span className="font-medium">{alternativa.letra})</span>
                   <span>{alternativa.texto}</span>
                 </Label>
