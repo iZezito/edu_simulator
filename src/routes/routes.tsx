@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found.tsx";
 import {SignupForm} from "@/pages/signup.tsx";
 import SimuladoPage from '@/pages/simulado';
 import SimuladoView from '@/pages/simulado/edit';
+import Sobre from '@/pages/sobre';
 
 const allRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -25,7 +26,11 @@ const allRoutes = () => {
       path: '/signup',
       exact: true,
       element: !isAuthenticated ? <SignupForm/> : <Navigate to={'/'}/>,
-
+    },
+    {
+      path: '/sobre',
+      exact: true,
+      element: <Sobre/>,
     }
   ];
 

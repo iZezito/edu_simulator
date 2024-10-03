@@ -15,6 +15,14 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
     handleClick(simulado.id);
   };
 
+  const calculatePercentage = (simulado: Simulado) => {
+    const { pontuacaoCienciasNatureza, pontuacaoHumanas, pontuacaoLinguagens, pontuacaoMatematica } = simulado;
+    const total  = pontuacaoCienciasNatureza + pontuacaoHumanas + pontuacaoLinguagens + pontuacaoMatematica;
+    const corrects = Math.round((total / 1000) * 180);
+    const percentage = Math.round(corrects / 25 * 10) + '%';
+    return percentage;
+  }
+
   return (
     <Card className="p-4 bg-background border border-muted rounded-lg hover:shadow-2xl cursor-pointer" onClick={click}>
       <CardHeader>
@@ -39,7 +47,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
                 simulado.finalizado ? 'text-primary' : 'text-muted-foreground'
               )}
             >
-              {simulado.finalizado ? "100%" : '-'}
+              {simulado.finalizado ? calculatePercentage(simulado) : '-'}
             </span>
           </div>
         </div>

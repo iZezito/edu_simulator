@@ -1,5 +1,5 @@
 import { useService } from "@/hooks/use-service";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Simulado } from "@/types";
 import SimuladoCard from "@/components/simulado-card";
 import { useNavigate } from "react-router-dom";
@@ -19,17 +19,21 @@ export default function SimuladoPage() {
     navigate(`/simulado/${id}`);
   }
 
+  const finalizados = useMemo(() => {
+    return data?.list?.filter((simulado: Simulado)  =>  simulado.finalizado).length;
+  }, [data]);
+
   return (
     <div className="w-full max-w-6xl mx-auto py-8 px-4 md:px-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Simulados</h1>
         <div className="flex items-center gap-2">
           <ClipboardCheckIcon className="w-5 h-5 text-muted-foreground" />
-          <span className="text-muted-foreground">2 de 15 simulados concluídos</span>
+          <span className="text-muted-foreground">{finalizados} de 15 simulados concluídos</span>
         </div>
       </div>
       <div className="w-full bg-muted rounded-lg overflow-hidden">
-        <div className="h-2 bg-primary" style={{ width: "30%" }} />
+        <div className="h-2 bg-primary" style={{ width: `${((finalizados|| 0) /15 * 100)}%` }} />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">

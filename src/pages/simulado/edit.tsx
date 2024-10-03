@@ -62,6 +62,10 @@ export default function SimuladoView() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["questao", id, page] });
+      toast({
+        title: "Resposta registrada",
+        description: "Sua resposta foi registrada com sucesso!",
+      })
     },
   });
 
