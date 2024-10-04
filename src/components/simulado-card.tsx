@@ -4,6 +4,7 @@ import { ClipboardCheckIcon, TrophyIcon } from '@/components/icons';
 import { Simulado } from '@/types';
 import { cn } from "@/lib/utils";
 import { RadialChart } from './radial-chart';
+import { BarChartAcertos } from './bar-chart';
 
 import {
   Dialog,
@@ -33,7 +34,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
   const calculatePercentage = (simulado: Simulado) => {
     const { pontuacaoCienciasNatureza, pontuacaoHumanas, pontuacaoLinguagens, pontuacaoMatematica } = simulado;
     const total  = pontuacaoCienciasNatureza + pontuacaoHumanas + pontuacaoLinguagens + pontuacaoMatematica;
-    const corrects = Math.round((total / 1000) * 180);
+    const corrects = Math.round((total / 4000) * 180);
     const percentage = Math.round(corrects / 180 * 100) + '%';
     return percentage;
   }
@@ -44,10 +45,25 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
     setOpen(!open);
   };
 
-  const handleAcertos = () => {
+  const handleAcertosTotal = () => {
     const { pontuacaoCienciasNatureza, pontuacaoHumanas, pontuacaoLinguagens, pontuacaoMatematica } = simulado;
-    const total   = pontuacaoCienciasNatureza + pontuacaoHumanas + pontuacaoLinguagens + pontuacaoMatematica;
-    return Math.round((total/1000) * 180);
+    const total = pontuacaoCienciasNatureza + pontuacaoHumanas + pontuacaoLinguagens + pontuacaoMatematica;
+    return Math.round((total/4000) * 180);
+  };
+
+  const handleAcertosArea = (area: string) => {
+    const  { pontuacaoCienciasNatureza, pontuacaoHumanas, pontuacaoLinguagens, pontuacaoMatematica } = simulado;
+    switch (area) {
+      case 'ciencias':
+        return Math.round((pontuacaoCienciasNatureza/ 1000) * 45);
+      case 'humanas':
+        return Math.round((pontuacaoHumanas/ 1000) * 45);
+      case 'linguagens':
+        return Math.round((pontuacaoLinguagens/ 1000) * 45);
+      default:
+        return Math.round((pontuacaoMatematica / 1000) * 45);
+      }
+
   };
 
   return (
@@ -93,7 +109,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
         <RadialChart
           title="Radial Chart - Acertos e Erros"
           description="Resultado do Simulado"
-          data={[{ acertos: handleAcertos(), erros: 180 - handleAcertos()}]}
+          data={[{ acertos: handleAcertosTotal(), erros: 180 - handleAcertosTotal()}]}
           config={{
             acertos: {
               label: "Acertos",
@@ -105,21 +121,12 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
             },
           }}
 />
-<RadialChart
-          title="Radial Chart - Acertos e Erros"
-          description="Resultado do Simulado"
-          data={[{ acertos: handleAcertos(), erros: 180 - handleAcertos()}]}
-          config={{
-            acertos: {
-              label: "Acertos",
-              color: "hsl(var(--chart-1))",
-            },
-            erros: {
-              label: "Erros",
-              color: "hsl(var(--chart-2))",
-            },
-          }}
-/>
+<BarChartAcertos  data={[
+  { area: "matemática", acertos: handleAcertosArea('matematica'), erros: 45 - handleAcertosArea('matematica') },
+  { area: "ciencias", acertos: handleAcertosArea('ciencias'), erros: 45 - handleAcertosArea('ciencias') },
+  { area: "humanas", acertos: handleAcertosArea('humanas'), erros: 45 - handleAcertosArea('humanas') },
+  { area: "linguagens", acertos: handleAcertosArea('linguagens'), erros: 45 - handleAcertosArea('linguagens') },
+]}/>
         </div>
       </DialogContent>
     </Dialog>
