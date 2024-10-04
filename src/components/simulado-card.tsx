@@ -35,7 +35,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
     const { pontuacaoCienciasNatureza, pontuacaoHumanas, pontuacaoLinguagens, pontuacaoMatematica } = simulado;
     const total  = pontuacaoCienciasNatureza + pontuacaoHumanas + pontuacaoLinguagens + pontuacaoMatematica;
     const corrects = Math.round((total / 4000) * 180);
-    const percentage = Math.round(corrects / 180 * 100) + '%';
+    const percentage = (corrects / 180 * 100).toFixed(2) + '%';
     return percentage;
   }
 
