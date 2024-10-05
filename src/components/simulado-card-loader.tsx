@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton" // Placeholder para carregar dados
 
-const SimuladoCardLoading: React.FC = () => {
+const SimuladoCardSkeleton: React.FC = () => {
   return (
     <Card className="p-4 bg-background border border-muted rounded-lg hover:shadow-2xl cursor-pointer">
             <CardHeader>
@@ -25,4 +25,4 @@ const SimuladoCardLoading: React.FC = () => {
   );
 };
 
-export default SimuladoCardLoading;
+export default SimuladoCardSkeleton;

@@ -34,7 +34,6 @@ export function RadialChart({
   data,
   config,
   acertosLabel = "Acertos",
-  totalLabel = "Total",
   footerText = "Showing total hits and errors for the last session",
   trendingText = "Trending up by",
   trendingPercentage = "5.2%",

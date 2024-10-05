@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useService } from "@/hooks/use-service";
@@ -15,7 +15,6 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog"
-import api from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
 export default function SimuladoView() {
@@ -30,7 +29,7 @@ export default function SimuladoView() {
   const respostaService = useService<Resposta>("respostas");
   const queryClient = useQueryClient();
 
-  const { data: simulado, isLoading: isSimuladoLoading } = useQuery({
+  const { data: simulado } = useQuery({
     queryKey: ["simulado", id],
     queryFn: () => simuladoService.get(id),
     enabled: !!id,
@@ -86,13 +85,6 @@ export default function SimuladoView() {
     
     
   };
-    // api.put(`simulados/${id}`).then(()=> {
-    //   toast({
-    //     title: "Simulado Finalizado",
-    //     description: "Seu simulado foi finalizado com sucesso!",
-    //   })
-    // });
-    // setModalVisible(false);
 
   return (
     <div className="flex flex-col items-center justify-center bg-background p-4">
