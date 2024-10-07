@@ -12,6 +12,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { description } from "@/pages/login"
 
 // Configuração do gráfico
 const chartConfig = {
@@ -28,14 +29,16 @@ const chartConfig = {
 // Componente reutilizável
 interface BarChartAcertosProps {
   data: { area: string; acertos: number; erros: number }[]
+  title: string
+  description?: string
 }
 
-export function BarChartAcertos({ data }: BarChartAcertosProps) {
+export function BarChartAcertos({ data, title, description }: BarChartAcertosProps) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Tooltip - Line Indicator</CardTitle>
-        <CardDescription>Tooltip with line indicator.</CardDescription>
+      <CardHeader className="items-center pb-0">
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

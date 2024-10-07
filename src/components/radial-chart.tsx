@@ -34,9 +34,6 @@ export function RadialChart({
   data,
   config,
   acertosLabel = "Acertos",
-  footerText = "Showing total hits and errors for the last session",
-  trendingText = "Trending up by",
-  trendingPercentage = "5.2%",
 }: RadialChartProps) {
   const acertos = data[0].acertos as number
   const erros = data[0].erros as number
@@ -106,12 +103,6 @@ export function RadialChart({
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          {trendingText} {trendingPercentage} <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">{footerText}</div>
-      </CardFooter>
     </Card>
   )
 }

@@ -105,7 +105,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
         </DialogHeader>
         <div className="grid gap-4 py-4">
         <RadialChart
-          title="Radial Chart - Acertos e Erros"
+          title="Geral - Acertos e Erros"
           description="Resultado do Simulado"
           data={[{ acertos: handleAcertosTotal(), erros: 180 - handleAcertosTotal()}]}
           config={{
@@ -119,9 +119,12 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
             },
           }}
 />
-<BarChartAcertos  data={[
+<BarChartAcertos  
+title="Específicos"
+description="Resultados do simulado por área"
+data={[
   { area: "matemática", acertos: handleAcertosArea('matematica'), erros: 45 - handleAcertosArea('matematica') },
-  { area: "ciencias", acertos: handleAcertosArea('ciencias'), erros: 45 - handleAcertosArea('ciencias') },
+  { area: "ciências", acertos: handleAcertosArea('ciencias'), erros: 45 - handleAcertosArea('ciencias') },
   { area: "humanas", acertos: handleAcertosArea('humanas'), erros: 45 - handleAcertosArea('humanas') },
   { area: "linguagens", acertos: handleAcertosArea('linguagens'), erros: 45 - handleAcertosArea('linguagens') },
 ]}/>
