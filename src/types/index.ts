@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import api from '@/services/api';
 
 export const loginSchema = z.object({
   email: z.string().min(1, 'O login contém no mínimo 1 caractere'),
@@ -7,11 +8,61 @@ export const loginSchema = z.object({
 
 export type LoginData = z.infer<typeof loginSchema>;
 
+const isLoginAvailable = async (login: string) => {
+  const response = await api.get(`/usuarios/login/${login}`);
+  const data = await response.data
+  return !!data;
+};
+
 export const userSchema = z.object({
   nome: z.string().min(1, 'O nome deve ter no mínimo 1 caractere'),
   login: z.string().min(1, 'O login deve ter no mínimo 1 caractere'),
-  senha: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres')
+  senha: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+  repetirSenha: z.string(),
+}).refine(
+    	(values) => {
+    		return values.senha === values.repetirSenha;
+    	},
+    	{
+    		message: "Deve ser igual ao campo senha",
+    		path: ["repetirSenha"],
+    	},
+).superRefine(async (data, ctx) => {
+  try {
+    // Substitua esta URL pela sua API real
+    const response = await api.get(`/usuarios/login/${data.login}`);
+    const exists = await response.data
+    
+    
+    if (exists) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Este login já está em uso",
+        path: ["login"]
+      });
+    }
+  } catch (error) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Erro ao verificar disponibilidade do login",
+      path: ["login"]
+    });
+  }
+});
+
+export const userUpdateSchema = z.object({
+  nome: z.string().min(1, 'O nome deve ter no mínimo 1 caractere'),
+  login: z.string().min(1, 'O login deve ter no mínimo 1 caractere'),
 })
+
+export type UpdateUser = z.infer<typeof userUpdateSchema>
+
+export type UserDTO = {
+  id: number;
+  nome: string;
+  login: string;
+}
+
 
 export type CreateUser = z.infer<typeof userSchema>
 

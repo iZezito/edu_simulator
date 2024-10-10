@@ -35,7 +35,7 @@ const LoginBadge = ({isAuthenticated}: Props) => {
                         <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
                         <DropdownMenuSeparator/>
                         <DropdownMenuItem>
-                            <Link to="/auth/settings" className="flex flex-1 justify-start items-center">
+                            <Link to="/profile" className="flex flex-1 justify-start items-center">
                                 <LineMdCogLoop className="mr-2"/>
                                 Perfil
                             </Link>

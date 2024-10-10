@@ -5,10 +5,20 @@ import { useState } from 'react';
 const userSchema = z.object({
   nome: z.string().min(1, "Nome é obrigatório"),
   login: z.string().min(1, "Login é obrigatório"),
-  senha: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
   email: z.string().email("Email inválido"),
   idade: z.coerce.number().min(18, "Idade mínima é 18 anos"),
-});
+  senha: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
+  repetirSenha: z.string().min(6, "Repetir senha deve ter no mínimo 6 caracteres"),
+})
+// .refine(
+//   	(values) => {
+//   		return values.senha === values.repetirSenha;
+//   	},
+//   	{
+//   		message: "Os campos de Senha e Repetir senha devem coincidir",
+//   		path: ["repetirSenha"],
+//   	},
+//   );
 
 type UserSchema = z.infer<typeof userSchema>;
 
@@ -47,6 +57,11 @@ export default function Sobre() {
           idade: {
             label: 'Idade',
             placeholder: 'Sua idade'
+          },
+          repetirSenha: {
+            type: 'password',
+            label: 'Repetir Senha',
+            placeholder: '******'
           }
         }}
       />

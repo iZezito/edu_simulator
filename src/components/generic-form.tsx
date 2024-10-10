@@ -49,6 +49,7 @@ interface GenericFormProps<T extends ZodObjectShape> {
     placeholder?: string;
     type?: string;
     hidden?: boolean;
+    disabled?: boolean;
   }>>;
 }
 
@@ -170,7 +171,7 @@ export function GenericForm<T extends ZodObjectShape>({
                                   : e.target.value;
                                 formField.onChange(value);
                               }}
-                              disabled={isSubmitting}
+                              disabled={fieldConfig[field.name]?.disabled ?? isSubmitting}
                             />
                           </FormControl>
                           <FormMessage />

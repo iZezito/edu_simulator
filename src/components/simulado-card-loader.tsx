@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton" // Placeholder para carregar dados
+import { Skeleton } from "@/components/ui/skeleton"
 
 const SimuladoCardSkeleton: React.FC = () => {
   return (
