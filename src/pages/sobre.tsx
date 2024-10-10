@@ -40,7 +40,6 @@ export default function Sobre() {
         position={[3, 2]}
         title="Criar Usuário"
         description="Entre com as informações para criar um novo usuário"
-        isSubmitting={false}
         defaultValues={{
           nome: 'Neymar',
           login: 'neymar.boatarde',

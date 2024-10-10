@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { GenericForm, FormAction } from '@/components/generic-form';
 import { useEffect, useState } from 'react';
 import { useService } from '@/hooks/use-service';
@@ -35,7 +34,6 @@ export default function Profile() {
         position={[2, 1]}
         title="Meu perfil"
         description="Aqui você pode atualizar alguns dos seus dados"
-        isSubmitting={service.isPending}
         defaultValues={{
           nome: user?.nome,
           login: user?.login,

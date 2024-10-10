@@ -8,12 +8,6 @@ export const loginSchema = z.object({
 
 export type LoginData = z.infer<typeof loginSchema>;
 
-const isLoginAvailable = async (login: string) => {
-  const response = await api.get(`/usuarios/login/${login}`);
-  const data = await response.data
-  return !!data;
-};
-
 export const userSchema = z.object({
   nome: z.string().min(1, 'O nome deve ter no mínimo 1 caractere'),
   login: z.string().min(1, 'O login deve ter no mínimo 1 caractere'),

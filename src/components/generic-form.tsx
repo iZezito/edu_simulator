@@ -43,7 +43,6 @@ interface GenericFormProps<T extends ZodObjectShape> {
   position: [number, number];
   title: string;
   description?: string;
-  isSubmitting: boolean;
   fieldConfig?: Partial<Record<keyof T, {
     label?: string;
     placeholder?: string;
@@ -88,7 +87,6 @@ export function GenericForm<T extends ZodObjectShape>({
   position,
   title,
   description,
-  isSubmitting,
   fieldConfig = {}
 }: GenericFormProps<T>) {
   type FormData = z.infer<typeof schema>;
@@ -171,7 +169,7 @@ export function GenericForm<T extends ZodObjectShape>({
                                   : e.target.value;
                                 formField.onChange(value);
                               }}
-                              disabled={fieldConfig[field.name]?.disabled ?? isSubmitting}
+                              disabled={fieldConfig[field.name]?.disabled ?? form.formState.isSubmitting}
                             />
                           </FormControl>
                           <FormMessage />
@@ -184,7 +182,7 @@ export function GenericForm<T extends ZodObjectShape>({
               <Button 
                 type="submit" 
                 className="w-full" 
-                disabled={isSubmitting}
+                disabled={form.formState.isSubmitting}
               >
                 {action === FormAction.CREATE ? 'Criar' : 'Atualizar'}
               </Button>

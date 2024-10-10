@@ -11,6 +11,7 @@ type QuestionDisplayProps = {
   currentQuestionNumber: number;
   onAlternativeSelect: (letra: string) => void;
   isFinished: boolean | undefined;
+  isResponding: boolean;
   totalQuestions: number;
 }
 
@@ -19,6 +20,7 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
   currentQuestionNumber,
   onAlternativeSelect,
   isFinished,
+  isResponding,
   totalQuestions,
 }) => {
   const letraSelecionada = questao?.respostaSelecionada?.alternativaSelecionada || '';
@@ -64,7 +66,7 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
           <RadioGroup
             value={letraSelecionada}
             onValueChange={onAlternativeSelect}
-            disabled={isFinished}
+            disabled={isFinished || isResponding}
             className="grid grid-cols-2 gap-4"
           >
             {questao.alternativas.map((alternativa, index) => (
@@ -88,7 +90,7 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
           <RadioGroup
             value={letraSelecionada}
             onValueChange={onAlternativeSelect}
-            disabled={isFinished}
+            disabled={isFinished || isResponding}
             className="space-y-2"
           >
             {questao?.alternativas.map((alternativa) => (

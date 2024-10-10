@@ -19,7 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function SimuladoView() {
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { toast, loading, removeLoading } = useToast();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
@@ -59,17 +59,45 @@ export default function SimuladoView() {
         alternativaSelecionada: alternative,
       });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["questao", id, page] });
+    onSuccess: (_, alternative) => {
+      queryClient.setQueryData<ResponseType<QuestaoComRespostaDTO>>(["questao", id, page], (oldData) => {
+        if (!oldData) return oldData;
+        
+        
+        const updatedQuestaoDTO: ResponseType<QuestaoComRespostaDTO> = {
+          ...oldData,
+          content: oldData.content.map((questao) => {
+            if (questao.id === questaoDTO?.content[0].id) {
+              return {
+                ...questao,
+                respostaSelecionada: {
+                  ...questao.respostaSelecionada,
+                  alternativaSelecionada: alternative,
+                },
+              };
+            }
+            return questao;
+          }),
+        };
+  
+        return updatedQuestaoDTO;
+      });
+  
       toast({
         title: "Resposta registrada",
         description: "Sua resposta foi registrada com sucesso!",
-      })
+      });
     },
   });
-
+  
   const handleAlternativeSelect = (alternative: string) => {
-    mutation.mutate(alternative);
+    const loadingId = loading("Registrando resposta...");
+  
+    mutation.mutate(alternative, {
+      onSettled: () => {
+        removeLoading(loadingId);
+      },
+    });
   };
 
   const finalizarSimulado = async () => {
@@ -100,6 +128,7 @@ export default function SimuladoView() {
             currentQuestionNumber={page}
             onAlternativeSelect={handleAlternativeSelect}
             isFinished={simulado?.finalizado}
+            isResponding={respostaService.isPending}
             totalQuestions={questaoDTO.totalPages}
           />
         )}
