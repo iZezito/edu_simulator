@@ -1,69 +1,53 @@
-import { z } from 'zod';
-import { GenericForm, FormAction } from '@/components/generic-form';
-import { useState } from 'react';
+import React from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const userSchema = z.object({
-  nome: z.string().min(1, "Nome é obrigatório"),
-  login: z.string().min(1, "Login é obrigatório"),
-  email: z.string().email("Email inválido"),
-  idade: z.coerce.number().min(18, "Idade mínima é 18 anos"),
-  senha: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
-  repetirSenha: z.string().min(6, "Repetir senha deve ter no mínimo 6 caracteres"),
-})
-// .refine(
-//   	(values) => {
-//   		return values.senha === values.repetirSenha;
-//   	},
-//   	{
-//   		message: "Os campos de Senha e Repetir senha devem coincidir",
-//   		path: ["repetirSenha"],
-//   	},
-//   );
+interface InfoCardProps {
+  title: string
+  content: string
+}
 
-type UserSchema = z.infer<typeof userSchema>;
+const InfoCard: React.FC<InfoCardProps> = ({ title, content }) => (
+  <Card className="w-full max-w-md mx-auto my-4">
+    <CardHeader>
+      <CardTitle>{title}</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p>{content}</p>
+    </CardContent>
+  </Card>
+)
 
-export default function Sobre() {
-  const [usuario, setUsuario] = useState<UserSchema>();
-
-  const handleSubmit = async (data: UserSchema): Promise<void> => {
-    setUsuario(data);
-    console.log(data);
-  };
+const Sobre: React.FC = () => {
 
   return (
-    <>
-      {usuario && <p>{JSON.stringify(usuario)}</p>}
-      <GenericForm
-        schema={userSchema}
-        submitFn={handleSubmit}
-        action={FormAction.CREATE}
-        position={[3, 2]}
-        title="Criar Usuário"
-        description="Entre com as informações para criar um novo usuário"
-        defaultValues={{
-          nome: 'Neymar',
-          login: 'neymar.boatarde',
-          email: 'neymar@gmail.com',
-          senha: '1234567',
-          idade: 25
-        }}
-        fieldConfig={{
-          senha: {
-            type: 'password',
-            label: 'Senha',
-            placeholder: '******'
-          },
-          idade: {
-            label: 'Idade',
-            placeholder: 'Sua idade'
-          },
-          repetirSenha: {
-            type: 'password',
-            label: 'Repetir Senha',
-            placeholder: '******'
-          }
-        }}
-      />
-    </>
-  );
+    <div className="min-h-screen flex flex-col items-center bg-background">
+      <div className="flex flex-col items-center mt-12 mb-10 w-full max-w-4xl px-4">
+        <div className="mt-10 bg-primary text-primary-foreground p-4 rounded-md">
+          <h2 className="text-xl font-semibold">O que é o OpenEduSim?</h2>
+        </div>
+
+        <InfoCard
+          title="OpenEduSim"
+          content="O OpenEduSim é uma plataforma de simulação de provas de vestibulares e concursos públicos. Aqui você pode fazer simulados de provas de vestibulares e concursos públicos de forma gratuita e participar do nosso ranking."
+        />
+
+        <InfoCard
+          title="Objetivo"
+          content="O objetivo do OpenEduSim é ajudar estudantes a se prepararem para provas de vestibulares e concursos públicos. Aqui você pode fazer simulados de provas de vestibulares e concursos públicos de forma gratuita e participar do nosso ranking."
+        />
+
+        <InfoCard
+          title="Público-alvo"
+          content="O público-alvo deste projeto são os estudantes que estão se preparando para o ENEM"
+        />
+
+        <InfoCard
+          title="Banco de dados"
+          content="O banco de dados das questões do site foi criado a partir de um algoritmo que utiliza de OCR (Reconhecimento Ótico de Caracteres) para reconhecer todos os caracteres das provas anteriores do ENEM, juntamente com a utilização de expressões regulares para separar cada pergunta, formulando um banco para criar esta aplicação web que simula as avaliações."
+        />
+      </div>
+    </div>
+  )
 }
+
+export default Sobre;
