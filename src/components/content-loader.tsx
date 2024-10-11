@@ -100,7 +100,7 @@ const ContentLoader: React.FC<Props> = ({
 
     if (!children) {
         return (
-            <div className="text-center text-gray-500">
+            <div className="text-center">
                 {noContent}
             </div>
         );

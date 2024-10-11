@@ -119,10 +119,10 @@ export default function SimuladoView() {
       <ContentLoader
         loading={isQuestaoLoading}
         error={questaoError}
-        noContent={"sem dados"}
+        noContent={`Questão não encontrada. Tente alguma entre 1 e ${questaoDTO?.totalPages}`}
         loadingComponent={<QuestionDisplaySkeleton />}
       >
-        {questaoDTO && (
+        {questaoDTO?.content.length !== undefined && questaoDTO?.content.length > 0 && (
           <QuestionDisplay
             questao={questaoDTO.content[0]}
             currentQuestionNumber={page}
@@ -132,7 +132,8 @@ export default function SimuladoView() {
             totalQuestions={questaoDTO.totalPages}
           />
         )}
-        {page === 180 && !simulado?.finalizado && (
+      </ContentLoader>
+      {page === 180 && !simulado?.finalizado && (
           <Button onClick={() => setModalVisible(true)}>Finalizar Simulado</Button>
         )}
       <Dialog open={modalVisible} onOpenChange={setModalVisible}>
@@ -152,7 +153,6 @@ export default function SimuladoView() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      </ContentLoader>
     </div>
   );
 }

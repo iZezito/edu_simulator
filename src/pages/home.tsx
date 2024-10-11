@@ -11,7 +11,7 @@ export default function Home() {
                         áreas de melhoria.
                     </p>
                     <Link
-                        to="/simulados"
+                        to="/simulado"
                         className="inline-flex items-center justify-center h-10 px-6 rounded-md bg-primary text-primary-foreground font-medium transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                     >
                         Começar Simulados
