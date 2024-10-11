@@ -21,7 +21,7 @@ const Sobre: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-background">
-      <div className="flex flex-col items-center mt-12 mb-10 w-full max-w-4xl px-4">
+      <div className="flex flex-col items-center mb-10 w-full max-w-4xl px-4">
         <div className="mt-10 bg-primary text-primary-foreground p-4 rounded-md">
           <h2 className="text-xl font-semibold">O que é o OpenEduSim?</h2>
         </div>
