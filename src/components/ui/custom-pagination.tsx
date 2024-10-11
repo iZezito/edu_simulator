@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import { Input } from "./input";
+import { useDebouncing } from "@/hooks/use-debouncing";
+import { useState } from "react";
 
 type PaginationProps = {
   totalPages: number;
@@ -10,11 +13,15 @@ type PaginationProps = {
 
 export function CustomPagination({ totalPages, currentPage = 1, totalItems }: PaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [pageInput, setPageInput] = useState<string>(String(currentPage));
 
   const handlePageChange = (page: number) => {
     searchParams.set("page", page.toString());
+    setPageInput(String(page));
     setSearchParams(searchParams);
   };
+
+  const handleChoicePage = useDebouncing(handlePageChange, 1000);
 
   return (
     <div className="flex items-center justify-between px-2">
@@ -44,6 +51,10 @@ export function CustomPagination({ totalPages, currentPage = 1, totalItems }: Pa
             <span className="sr-only">Go to previous page</span>
             <ChevronLeft className="h-4 w-4" />
           </Button>
+          <Input value={pageInput} type="number" max={totalPages} onChange={(e) => {
+            const value = Math.min(Number(e.target.value), totalPages);
+            setPageInput(String(value))
+            handleChoicePage(value)}} className="h-8 w-8 p-0 text-center bg-muted" />
           <Button
             variant="outline"
             className="h-8 w-8 p-0"

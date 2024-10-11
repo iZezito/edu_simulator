@@ -22,7 +22,7 @@ export default function SimuladoView() {
   const { toast, loading, removeLoading } = useToast();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
-  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) <= 0 ? 1 : Number(searchParams.get("page")) : 1;
   const { id } = useParams();
   const questaoDTOService = useService<ResponseType<QuestaoComRespostaDTO>>("questoes");
   const simuladoService = useService<Simulado>("simulados");
