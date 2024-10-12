@@ -22,7 +22,7 @@ export const description =
 
 export function LoginForm() {
     const navigate = useNavigate();
-    const { login, loading } = useAuth()
+    const { login } = useAuth();
 
     const form = useForm<LoginData>({
         resolver: zodResolver(loginSchema),
