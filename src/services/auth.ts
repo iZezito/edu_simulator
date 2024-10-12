@@ -20,9 +20,7 @@ export const login = async (data: LoginData): Promise<AuthResponse> => {
 
 
 export const logout = () => {
-
     destroyCookie(null, 'token');
-    window.location.href = '/login';
 };
 
 
