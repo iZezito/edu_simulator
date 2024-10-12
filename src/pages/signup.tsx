@@ -116,7 +116,7 @@ return (
                                 <FormControl>
                                     <Input
                                         type="text"
-                                        placeholder="Neymar"
+                                        placeholder="Nome..."
                                         required
                                         {...field}
                                         disabled={form.formState.isSubmitting}
@@ -138,7 +138,7 @@ return (
                                 <FormControl>
                                     <Input
                                         type="text"
-                                        placeholder="Neymar"
+                                        placeholder="Login..."
                                         required
                                         {...field}
                                         disabled={form.formState.isSubmitting}

@@ -66,7 +66,7 @@ export function LoginForm() {
                                             placeholder="voce@provedor.com.br"
                                             required
                                             {...field}
-                                            disabled={loading}
+                                            disabled={form.formState.isSubmitting}
                                         />
                                     </FormControl>
                                     <FormDescription className="hidden">Seu e-mail.</FormDescription>
@@ -88,7 +88,7 @@ export function LoginForm() {
                                             placeholder="******"
                                             required
                                             {...field}
-                                            disabled={loading}
+                                            disabled={form.formState.isSubmitting}
                                         />
                                     </FormControl>
                                     <FormDescription className="hidden">Sua senha.</FormDescription>
@@ -97,8 +97,8 @@ export function LoginForm() {
                             )}
                         />
                     </div>
-                    <Button type="submit" className="w-full">
-                        Login
+                    <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                        {form.formState.isSubmitting? "Carregando..." : "Login"}
                     </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">
