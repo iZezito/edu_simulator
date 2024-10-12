@@ -43,7 +43,7 @@ const Sobre: React.FC = () => {
 
         <InfoCard
           title="Banco de dados"
-          content="O banco de dados das questões do site foi criado a partir de um algoritmo que utiliza de OCR (Reconhecimento Ótico de Caracteres) para reconhecer todos os caracteres das provas anteriores do ENEM, juntamente com a utilização de expressões regulares para separar cada pergunta, formulando um banco para criar esta aplicação web que simula as avaliações."
+          content="O banco de dados das questões do ENEM foi criado a partir de arquivos JSON obtidos do site docs.enem.dev. Utilizei esses dados para transformá-los em um banco de dados relacional no PostgreSQL, organizando as informações de maneira mais eficiente. Durante o processo de conversão, identifiquei e corrigi algumas inconsistências nos dados, como textos e imagens faltando, garantindo que as questões fossem armazenadas de forma completa e coerente. O objetivo é proporcionar um acesso rápido e preciso às questões para análises e estudos mais detalhados."
         />
       </div>
     </div>
