@@ -133,7 +133,7 @@ export default function SimuladoView() {
           />
         )}
       </ContentLoader>
-      {page === 180 && !simulado?.finalizado && (
+      {page === questaoDTO?.totalPages && !simulado?.finalizado && (
           <Button onClick={() => setModalVisible(true)}>Finalizar Simulado</Button>
         )}
       <Dialog open={modalVisible} onOpenChange={setModalVisible}>
