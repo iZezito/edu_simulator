@@ -148,7 +148,7 @@ export default function SimuladoView() {
         )}
       </ContentLoader>
       {
-              !simulado?.finalizado && (
+              simulado && !simulado?.finalizado && (
                 <Button onClick={() => setModalVisible(true)} className="mt-4">Finalizar Simulado</Button>
                )
             }
