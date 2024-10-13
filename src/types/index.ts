@@ -123,7 +123,7 @@ export type Simulado = {
   pontuacaoCienciasNatureza: number;
   pontuacaoMatematica: number;
   usuario: Usuario;
-  respostas: Resposta[];
+  respostas: RespostaDTO[];
 };
 
 // Tipos adicionais que podem ser necessários

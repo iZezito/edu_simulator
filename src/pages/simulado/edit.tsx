@@ -59,7 +59,20 @@ export default function SimuladoView() {
         alternativaSelecionada: alternative,
       });
     },
-    onSuccess: (_, alternative) => {
+    onSuccess: (data, alternative) => {
+
+      queryClient.setQueryData<Simulado>(["simulado", id], (oldData)  => {
+        if (!oldData) return oldData;
+
+        const updatedSimulado: Simulado = {
+          ...oldData,
+          respostas: questaoDTO?.content[0].respostaSelecionada.id !== null ? oldData.respostas : [...oldData.respostas, questaoDTO?.content[0].respostaSelecionada],
+        };
+        console.log(updatedSimulado.respostas.length);
+        return updatedSimulado;
+      });
+
+
       queryClient.setQueryData<ResponseType<QuestaoComRespostaDTO>>(["questao", id, page], (oldData) => {
         if (!oldData) return oldData;
         
@@ -72,6 +85,7 @@ export default function SimuladoView() {
                 ...questao,
                 respostaSelecionada: {
                   ...questao.respostaSelecionada,
+                  id: data.id,
                   alternativaSelecionada: alternative,
                 },
               };
@@ -144,7 +158,7 @@ export default function SimuladoView() {
             <DialogTitle>Finalizar Simulado</DialogTitle>
             <DialogDescription>
               Tem certeza que deseja finalizar o simulado?
-              {simulado?.respostas !== undefined && simulado?.respostas?.length < 180 && (
+              {simulado?.respostas !== undefined && simulado?.respostas?.length < (questaoDTO?.totalPages || 185) && (
                 <p className="text-red-500 font-bold mt-2">Atenção: Você não respondeu todas as questões.</p>
               )}
             </DialogDescription>
