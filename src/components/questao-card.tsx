@@ -45,10 +45,11 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
       </div>
       <div className="p-6 space-y-4">
         <h4 className="text-xl font-medium">{questao?.titulo}</h4>
-        <div className="bg-muted p-4 rounded-md">
+        {questao?.context && (
+          <div className="bg-muted p-4 rounded-md">
           <p>{questao?.context}</p>
-        </div>
-        
+          </div>
+        )}
         {questao?.files?.length !== undefined && questao?.files?.length  > 0 && (
           <div className="space-y-2">
             <Label>Figuras:</Label>

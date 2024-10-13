@@ -133,7 +133,11 @@ export default function SimuladoView() {
           />
         )}
       </ContentLoader>
-      <Button onClick={() => setModalVisible(true)} className="mt-4">Finalizar Simulado</Button>
+      {
+              !simulado?.finalizado && (
+                <Button onClick={() => setModalVisible(true)} className="mt-4">Finalizar Simulado</Button>
+               )
+            }
       <Dialog open={modalVisible} onOpenChange={setModalVisible}>
         <DialogContent>
           <DialogHeader>
