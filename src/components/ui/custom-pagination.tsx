@@ -9,9 +9,10 @@ type PaginationProps = {
   totalPages: number;
   currentPage?: number;
   totalItems: number;
+  disabled?: boolean;
 };
 
-export function CustomPagination({ totalPages, currentPage = 1, totalItems }: PaginationProps) {
+export function CustomPagination({ totalPages, currentPage = 1, totalItems, disabled }: PaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageInput, setPageInput] = useState<string>(String(currentPage));
 
@@ -37,7 +38,7 @@ export function CustomPagination({ totalPages, currentPage = 1, totalItems }: Pa
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => handlePageChange(1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || disabled}
           >
             <span className="sr-only">Go to first page</span>
             <ChevronsLeft className="h-4 w-4" />
@@ -46,7 +47,7 @@ export function CustomPagination({ totalPages, currentPage = 1, totalItems }: Pa
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || disabled}
           >
             <span className="sr-only">Go to previous page</span>
             <ChevronLeft className="h-4 w-4" />
@@ -59,7 +60,7 @@ export function CustomPagination({ totalPages, currentPage = 1, totalItems }: Pa
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || disabled}
           >
             <span className="sr-only">Go to next page</span>
             <ChevronRight className="h-4 w-4" />
@@ -68,7 +69,7 @@ export function CustomPagination({ totalPages, currentPage = 1, totalItems }: Pa
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => handlePageChange(totalPages)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || disabled}
           >
             <span className="sr-only">Go to last page</span>
             <ChevronsRight className="h-4 w-4" />

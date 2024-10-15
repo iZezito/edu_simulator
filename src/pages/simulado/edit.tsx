@@ -29,7 +29,7 @@ export default function SimuladoView() {
   const respostaService = useService<Resposta>("respostas");
   const queryClient = useQueryClient();
 
-  const { data: simulado } = useQuery({
+  const { data: simulado, isLoading: isSimuladoLoading } = useQuery({
     queryKey: ["simulado", id],
     queryFn: () => simuladoService.get(id),
     enabled: !!id,
@@ -131,7 +131,7 @@ export default function SimuladoView() {
   return (
     <div className="flex flex-col items-center justify-center bg-background p-4">
       <ContentLoader
-        loading={isQuestaoLoading}
+        loading={isQuestaoLoading || isSimuladoLoading}
         error={questaoError}
         noContent={`Questão não encontrada. Tente alguma entre 1 e ${questaoDTO?.totalPages}`}
         loadingComponent={<QuestionDisplaySkeleton />}

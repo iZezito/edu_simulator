@@ -112,6 +112,7 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
           totalPages={totalQuestions}
           currentPage={currentQuestionNumber}
           totalItems={totalQuestions}
+          disabled={isResponding}
         />
       </CardFooter>
     </Card>
