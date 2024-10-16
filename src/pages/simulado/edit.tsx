@@ -115,6 +115,29 @@ export default function SimuladoView() {
   };
 
   const finalizarSimulado = async () => {
+    if(simulado?.finalizado) {
+      simuladoService.create({
+        id: Number(id),
+        finalizado: false,
+      }, {
+        params: {
+          ano: simulado?.year,
+         },
+      }).then(() => {
+        toast({
+          title: "Simulado refeito",
+          description: "O simulado foi refeito com sucesso!",
+        });
+        navigate("/simulado");
+      }).catch(() => {
+        toast({
+          title:  "Erro ao refazer o simulado",
+          description:  "Não foi possível refazer o simulado. Tente novamente mais tarde.",
+        });
+      }).finally(() => {
+        setModalVisible(false);
+      });
+    }
     simuladoService.update(String(id), { finalizado: true }).then(() => {
       toast({
             title: "Simulado Finalizado",
@@ -148,24 +171,24 @@ export default function SimuladoView() {
         )}
       </ContentLoader>
       {
-              simulado && !simulado?.finalizado && (
-                <Button onClick={() => setModalVisible(true)} className="mt-4">Finalizar Simulado</Button>
+              simulado && (
+                <Button onClick={() => setModalVisible(true)} className="mt-4">{simulado?.finalizado ? 'Refazer Simulado' : 'Finalizar Simulado'}</Button>
                )
             }
       <Dialog open={modalVisible} onOpenChange={setModalVisible}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Finalizar Simulado</DialogTitle>
+            <DialogTitle>{ simulado?.finalizado ? 'Refazer Simulado' : 'Finalizar Simulado'}</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja finalizar o simulado?
-              {simulado?.respostas !== undefined && simulado?.respostas?.length < (questaoDTO?.totalPages || 185) && (
+              Tem certeza que deseja {simulado?.finalizado ? 'refazer' : 'finalizar'} o simulado?
+              { !simulado?.finalizado && simulado?.respostas !== undefined && simulado?.respostas?.length < (questaoDTO?.totalPages || 185) && (
                 <p className="text-red-500 font-bold mt-2">Atenção: Você não respondeu todas as questões.</p>
               )}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setModalVisible(false)}>Cancelar</Button>
-            <Button onClick={finalizarSimulado} disabled={simuladoService.isPending}>{simuladoService.isPending ? 'Finalizando...' : 'Finalizar'}</Button>
+            <Button onClick={finalizarSimulado} disabled={simuladoService.isPending}>{simuladoService.isPending ? 'Carregando...' : simulado?.finalizado ? 'Refazer' : 'Finalizar'}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
