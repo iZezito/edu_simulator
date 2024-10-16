@@ -29,7 +29,7 @@ export default function SimuladoPage() {
         <h1 className="text-2xl font-bold">Simulados</h1>
         <div className="flex items-center gap-2">
           <ClipboardCheckIcon className="w-5 h-5 text-muted-foreground" />
-          <span className="text-muted-foreground">{finalizados} de 15 simulados concluídos</span>
+          <span className="text-muted-foreground">{finalizados} de {data.list?.length} simulados concluídos</span>
         </div>
       </div>
       <div className="w-full bg-muted rounded-lg overflow-hidden">
