@@ -68,7 +68,7 @@ export function SignupForm() {
         resolver: zodResolver(userSchema),
         defaultValues: {
             nome: "",
-            login: "",
+            email: "",
             senha: "",
             repetirSenha: ""
         },
