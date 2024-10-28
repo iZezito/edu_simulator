@@ -36,10 +36,10 @@ export default function Profile() {
         description="Aqui você pode atualizar alguns dos seus dados"
         defaultValues={{
           nome: user?.nome,
-          login: user?.login,
+          email: user?.email,
         }}
         fieldConfig={{
-          login:{
+          email:{
             disabled: true
           }
         }}

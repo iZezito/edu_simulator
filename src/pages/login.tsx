@@ -107,6 +107,11 @@ export function LoginForm() {
                         Cadastre-se
                     </Link>
                 </div>
+                <div className="mt-4 text-center text-sm">
+                    <Link to="/forgot-password" className="underline">
+                        Esqueceu sua senha?{" "}
+                    </Link>
+                </div>
             </CardContent>
         </Card>
         </form>

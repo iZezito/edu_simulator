@@ -8,6 +8,8 @@ import SimuladoPage from '@/pages/simulado';
 import SimuladoView from '@/pages/simulado/edit';
 import Sobre from '@/pages/sobre';
 import Profile from '@/pages/profile';
+import ForgotPasswordForm from '@/pages/forgot-password';
+import ResetPasswordForm from '@/pages/reset-password';
 
 const allRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -32,6 +34,16 @@ const allRoutes = () => {
       path: '/sobre',
       exact: true,
       element: <Sobre/>,
+    },
+    {
+      path: '/forgot-password',
+      exact: true,
+      element: !isAuthenticated ? <ForgotPasswordForm/> : <Navigate to={'/'}/>,
+    },
+    {
+      path: '/reset-password',
+      exact: true,
+      element: !isAuthenticated ? <ResetPasswordForm/> : <Navigate to={'/'} />
     }
   ];
 

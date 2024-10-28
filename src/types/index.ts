@@ -46,7 +46,7 @@ export const userSchema = z.object({
 
 export const userUpdateSchema = z.object({
   nome: z.string().min(1, 'O nome deve ter no mínimo 1 caractere'),
-  login: z.string().min(1, 'O login deve ter no mínimo 1 caractere'),
+  email: z.string().min(1, 'O email deve ter no mínimo 1 caractere'),
 })
 
 export type UpdateUser = z.infer<typeof userUpdateSchema>
@@ -54,7 +54,7 @@ export type UpdateUser = z.infer<typeof userUpdateSchema>
 export type UserDTO = {
   id: number;
   nome: string;
-  login: string;
+  email: string;
 }
 
 
@@ -63,7 +63,7 @@ export type CreateUser = z.infer<typeof userSchema>
 export type User = {
   id: number;
   nome: string;
-  login: string;
+  email: string;
   senha: string;
 };
 
