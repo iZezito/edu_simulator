@@ -10,7 +10,7 @@ export type LoginData = z.infer<typeof loginSchema>;
 
 export const userSchema = z.object({
   nome: z.string().min(1, 'O nome deve ter no mínimo 1 caractere'),
-  login: z.string().min(1, 'O login deve ter no mínimo 1 caractere'),
+  email: z.string().email('Email inválido'),
   senha: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
   repetirSenha: z.string(),
 }).refine(
@@ -24,22 +24,22 @@ export const userSchema = z.object({
 ).superRefine(async (data, ctx) => {
   try {
     // Substitua esta URL pela sua API real
-    const response = await api.get(`/usuarios/login/${data.login}`);
+    const response = await api.get(`/usuarios/login/${data.email}`);
     const exists = await response.data
     
     
     if (exists) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Este login já está em uso",
-        path: ["login"]
+        message: "Este email já está em uso",
+        path: ["email"]
       });
     }
   } catch (error) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: "Erro ao verificar disponibilidade do login",
-      path: ["login"]
+      message: "Erro ao verificar disponibilidade do email",
+      path: ["email"]
     });
   }
 });

@@ -59,7 +59,7 @@ export function LoginForm() {
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Login</FormLabel>
+                                    <FormLabel>E-mail</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="text"

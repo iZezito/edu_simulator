@@ -33,7 +33,7 @@ export function SignupForm() {
     const [isCheckingLogin, setIsCheckingLogin] = useState<boolean>(false);
 
     const checkLogin = async (value: string) => {
-        form.clearErrors("login");
+        form.clearErrors("email");
         setIsCheckingLogin(true);
         if (value.length === 0) {
             setIsCheckingLogin(false);
@@ -45,15 +45,15 @@ export function SignupForm() {
             const exists = response.data;
             
             if (exists) {
-                form.setError("login", {
+                form.setError("email", {
                     type: "manual",
-                    message: "Este login já está em uso"
+                    message: "Este email já está em uso"
                 });
             } else {
-                form.clearErrors("login");
+                form.clearErrors("email");
             }
         } catch (error) {
-            form.setError("login", {
+            form.setError("email", {
                 type: "manual",
                 message: "Erro ao verificar disponibilidade"
             });
@@ -131,14 +131,14 @@ return (
                     <div className="grid gap-2">
                     <FormField
                         control={form.control}
-                        name="login"
+                        name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Login</FormLabel>
+                                <FormLabel>E-mail</FormLabel>
                                 <FormControl>
                                     <Input
                                         type="text"
-                                        placeholder="Login..."
+                                        placeholder="E-mail..."
                                         required
                                         {...field}
                                         disabled={form.formState.isSubmitting}
@@ -148,12 +148,12 @@ return (
                                                 debouncedCheckLogin(e.target.value);
                                             } else {
                                                 setIsCheckingLogin(false);
-                                                form.clearErrors("login");
+                                                form.clearErrors("email");
                                             }
                                         }}
                                     />
                                 </FormControl>
-                                <FormDescription className="hidden">Seu login.</FormDescription>
+                                <FormDescription className="hidden">Seu email.</FormDescription>
                                 {isCheckingLogin && (
                                     <p className="text-sm text-muted-foreground mt-1">
                                         Verificando disponibilidade...
