@@ -10,6 +10,7 @@ import Sobre from '@/pages/sobre';
 import Profile from '@/pages/profile';
 import ForgotPasswordForm from '@/pages/forgot-password';
 import ResetPasswordForm from '@/pages/reset-password';
+import EmailValidation from '@/pages/validate-email';
 
 const allRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -44,6 +45,11 @@ const allRoutes = () => {
       path: '/reset-password',
       exact: true,
       element: !isAuthenticated ? <ResetPasswordForm/> : <Navigate to={'/'} />
+    },
+    {
+      path: 'validate-email',
+      exact: true,
+      element: !isAuthenticated ? <EmailValidation /> : <Navigate to={'/'} />,
     }
   ];
 

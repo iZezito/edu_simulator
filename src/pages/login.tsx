@@ -36,7 +36,7 @@ export function LoginForm() {
         console.log("login", data)
         await login(data).then(() => navigate("/")).catch((error) => {
             console.log(error);
-            form.setError("root", { type: 'manual', message: "E-mail ou senha inválidos" });
+            form.setError("root", { type: 'manual', message: error?.response?.data || "E-mail ou senha inválidos" });
         })
     }
 

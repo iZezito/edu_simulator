@@ -80,14 +80,13 @@ export function SignupForm() {
         console.log("login", data)
         await create(data).then(() => {
             toast({
-                title: "Sucesso",
-                description: `Usuário ${data.nome} criado com sucesso`,
+                title: "Usuário criado com sucesso!",
+                description: `Um email foi enviado para ${data.email} com as instruções para a confirmação da conta`,
             })
             navigate("/login")
 
         }).catch((error) => {
             console.log(error.toString());
-            // form.setError("root", { type: 'manual', message: error });
         })
     }
 
