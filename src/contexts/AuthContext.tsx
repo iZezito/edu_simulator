@@ -1,12 +1,14 @@
 import React, {createContext, useState, useEffect, useContext} from "react";
-import { login, logout, isAuthenticated } from "../services/auth";
+import { login, logout, isAuthenticated, AuthResponse } from "../services/auth";
 import { LoginData } from "@/types";
+import { AxiosResponse } from "axios";
 
 interface AuthContextProps {
     isAuthenticated: boolean;
-    login: (login: LoginData) => Promise<void>;
+    login: (login: LoginData) => Promise<AxiosResponse<AuthResponse>>;
     logout: () => void;
     loading: boolean;
+    setAuhtorized: (isAuthorized: boolean) => void;
 }
 
 // interface User {
@@ -28,10 +30,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, [authenticated]);
 
-    const handleLogin = async (loginData: LoginData) => {
+    const handleLogin = async (loginData: LoginData): Promise<AxiosResponse<AuthResponse>>=> {
         setLoading(true);
-        return await login(loginData).then(() => {
+        return await login(loginData).then((response) => {
+            if(response.status === 202) return response;
             setAuthenticated(true);
+            return response;
         }).finally(() => {
             setLoading(false);  
         });
@@ -42,8 +46,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setAuthenticated(false);
     };
 
+    const setAuhtorized = (isAuthorized: boolean) => {
+        setAuthenticated(isAuthorized);
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated: authenticated, login: handleLogin, logout: handleLogout, loading }}>
+        <AuthContext.Provider value={{ isAuthenticated: authenticated, login: handleLogin, logout: handleLogout, loading, setAuhtorized }}>
             {children}
         </AuthContext.Provider>
     );

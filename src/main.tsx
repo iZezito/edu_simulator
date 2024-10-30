@@ -11,7 +11,7 @@ import { Toaster } from './components/ui/toaster.tsx';
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
-    // <StrictMode>
+    <StrictMode>
         <AuthProvider>
             <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
                 <BrowserRouter>
@@ -22,5 +22,5 @@ createRoot(document.getElementById('root')!).render(
                 </BrowserRouter>
             </ThemeProvider>
         </AuthProvider>
-    // </StrictMode>,
+    </StrictMode>
 )
