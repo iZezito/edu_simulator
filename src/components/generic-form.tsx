@@ -18,6 +18,8 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card';
+import { Switch } from "@/components/ui/switch"
+
 
 export enum FormAction {
   CREATE = 'create',
@@ -154,23 +156,32 @@ export function GenericForm<T extends ZodObjectShape>({
                         <FormItem>
                           <FormLabel>{field.label}</FormLabel>
                           <FormControl>
-                            <Input
-                              type={field.type}
-                              placeholder={field.placeholder}
-                              {...formField}
-                              value={
-                                typeof formField.value === 'string' || typeof formField.value === 'number'
-                                  ? formField.value
-                                  : field.defaultValue as string | number
-                              }
-                              onChange={(e) => {
-                                const value = field.type === 'number' 
-                                  ? (e.target.value === '' ? '' : Number(e.target.value))
-                                  : e.target.value;
-                                formField.onChange(value);
-                              }}
-                              disabled={fieldConfig[field.name]?.disabled ?? form.formState.isSubmitting}
-                            />
+                          {field.type === 'checkbox' ? (
+              <Switch
+                className='m-0 ml-4'
+                checked={Boolean(formField.value)}
+                onCheckedChange={formField.onChange}
+                disabled={fieldConfig[field.name]?.disabled ?? form.formState.isSubmitting}
+              />
+            ) : (
+              <Input
+                type={field.type}
+                placeholder={field.placeholder}
+                {...formField}
+                value={
+                  typeof formField.value === 'string' || typeof formField.value === 'number'
+                    ? formField.value
+                    : field.defaultValue as string | number
+                }
+                onChange={(e) => {
+                  const value = field.type === 'number' 
+                    ? (e.target.value === '' ? '' : Number(e.target.value))
+                    : e.target.value;
+                  formField.onChange(value);
+                }}
+                disabled={fieldConfig[field.name]?.disabled ?? form.formState.isSubmitting}
+              />
+            )}
                           </FormControl>
                           <FormMessage />
                         </FormItem>

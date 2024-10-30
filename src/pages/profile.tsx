@@ -6,7 +6,6 @@ import ContentLoader from '@/components/content-loader';
 
 
 
-
 export default function Profile() {
   const [user, setUser] = useState<User>()
   const service = useService<User>('usuarios')
@@ -37,10 +36,15 @@ export default function Profile() {
         defaultValues={{
           nome: user?.nome,
           email: user?.email,
+          twoFactorAuthenticationEnabled: user?.twoFactorAuthenticationEnabled,
         }}
         fieldConfig={{
           email:{
             disabled: true
+          },
+          twoFactorAuthenticationEnabled: {
+            label: 'Autenticação de 2 Fatores',
+            type: 'checkbox'
           }
         }}
       />

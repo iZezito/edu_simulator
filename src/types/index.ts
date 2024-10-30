@@ -47,6 +47,7 @@ export const userSchema = z.object({
 export const userUpdateSchema = z.object({
   nome: z.string().min(1, 'O nome deve ter no mínimo 1 caractere'),
   email: z.string().min(1, 'O email deve ter no mínimo 1 caractere'),
+  twoFactorAuthenticationEnabled: z.boolean(),
 })
 
 export type UpdateUser = z.infer<typeof userUpdateSchema>
@@ -65,6 +66,7 @@ export type User = {
   nome: string;
   email: string;
   senha: string;
+  twoFactorAuthenticationEnabled: boolean;
 };
 
 
