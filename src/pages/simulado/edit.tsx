@@ -43,7 +43,7 @@ export default function SimuladoView() {
     queryKey: ["questao", id, page],
     queryFn: () =>
       questaoDTOService.get(undefined, {
-        params: { simuladoId: id, page, ano: simulado?.year, size: 1, finalizado: simulado?.finalizado },
+        params: { simuladoId: id, page, ano: simulado?.year, size: 1, finalizado: simulado?.finalizado, dia: simulado?.dia },
       }),
     enabled: !!simulado,
   });
@@ -122,6 +122,7 @@ export default function SimuladoView() {
       }, {
         params: {
           ano: simulado?.year,
+          dia: simulado?.dia,
          },
       }).then(() => {
         toast({
@@ -137,6 +138,7 @@ export default function SimuladoView() {
       }).finally(() => {
         setModalVisible(false);
       });
+      return
     }
     simuladoService.update(String(id), { finalizado: true }).then(() => {
       toast({

@@ -32,8 +32,8 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
   const calculatePercentage = (simulado: Simulado) => {
     const { pontuacaoCienciasNatureza, pontuacaoHumanas, pontuacaoLinguagens, pontuacaoMatematica } = simulado;
     const total  = pontuacaoCienciasNatureza + pontuacaoHumanas + pontuacaoLinguagens + pontuacaoMatematica;
-    const corrects = Math.round((total / 4000) * 180);
-    const percentage = (corrects / 180 * 100).toFixed(2) + '%';
+    const corrects = Math.round((total / 2000) * 90);
+    const percentage = (corrects / 90 * 100).toFixed(2) + '%';
     return percentage;
   }
 
@@ -46,7 +46,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
   const handleAcertosTotal = () => {
     const { pontuacaoCienciasNatureza, pontuacaoHumanas, pontuacaoLinguagens, pontuacaoMatematica } = simulado;
     const total = pontuacaoCienciasNatureza + pontuacaoHumanas + pontuacaoLinguagens + pontuacaoMatematica;
-    return Math.round((total/4000) * 180);
+    return Math.round((total/2000) * 90);
   };
 
   const handleAcertosArea = (area: string) => {
@@ -64,11 +64,21 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
 
   };
 
+  const data = simulado.dia === 1
+  ? [
+      { area: "humanas", acertos: handleAcertosArea('humanas'), erros: 45 - handleAcertosArea('humanas') },
+      { area: "linguagens", acertos: handleAcertosArea('linguagens'), erros: 45 - handleAcertosArea('linguagens') },
+    ]
+  : [
+      { area: "matemática", acertos: handleAcertosArea('matematica'), erros: 45 - handleAcertosArea('matematica') },
+      { area: "ciências", acertos: handleAcertosArea('ciencias'), erros: 45 - handleAcertosArea('ciencias') },
+    ];
+
   return (
     <>
     <Card className="p-4 bg-background border border-muted rounded-lg hover:shadow-2xl cursor-pointer" onClick={click}>
       <CardHeader>
-        <CardTitle>ENEM {simulado.year}</CardTitle>
+        <CardTitle>ENEM {simulado.year} - DIA {simulado.dia}</CardTitle>
         <CardDescription>Teste seus conhecimentos em geral</CardDescription>
       </CardHeader>
       <CardContent>
@@ -107,7 +117,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
         <RadialChart
           title="Geral - Acertos e Erros"
           description="Resultado do Simulado"
-          data={[{ acertos: handleAcertosTotal(), erros: 180 - handleAcertosTotal()}]}
+          data={[{ acertos: handleAcertosTotal(), erros: 90 - handleAcertosTotal()}]}
           config={{
             acertos: {
               label: "Acertos",
@@ -122,12 +132,7 @@ const SimuladoCard: React.FC<SimuladoCardProps> = ({ simulado, handleClick }) =>
 <BarChartAcertos  
 title="Específicos"
 description="Resultados do simulado por área"
-data={[
-  { area: "matemática", acertos: handleAcertosArea('matematica'), erros: 45 - handleAcertosArea('matematica') },
-  { area: "ciências", acertos: handleAcertosArea('ciencias'), erros: 45 - handleAcertosArea('ciencias') },
-  { area: "humanas", acertos: handleAcertosArea('humanas'), erros: 45 - handleAcertosArea('humanas') },
-  { area: "linguagens", acertos: handleAcertosArea('linguagens'), erros: 45 - handleAcertosArea('linguagens') },
-]}/>
+data={data}/>
         </div>
       </DialogContent>
     </Dialog>

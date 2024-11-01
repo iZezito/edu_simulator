@@ -117,6 +117,7 @@ export type RespostaDTO = {
 export type Simulado = {
   id: number;
   year: number;
+  dia: number;
   finalizado: boolean;
   dataInicio: Date; // Timestamp in Java is represented as Date in TypeScript
   temporizador: string; // Keeping as string to represent time; can be modified to a more suitable type if needed
